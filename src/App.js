@@ -1,11 +1,14 @@
+import Header from "./content/Header";
+import Navigation from "./content/Navigation";
 
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-       
-      </header>
+      <Navigation/>
+     
+      
+      
     </div>
   );
 }

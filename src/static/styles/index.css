@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body,
+h1, h2, h3, h4, h5, h6, 
+ul, ol, dd,
+p,
+fieldset{
+  margin:0; 
+  padding:0; 
+}
+
+body {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+ul, ol, dd { 
+  list-style:none; 
+}
+fieldset, input { 
+  border-width:0; 
+  outline: none;
+}
+a { 
+  text-decoration:none;  
+  
+}
+a:hover{
+  color: rgba(255, 255, 255, 0.921)
+}
+a,button{
+  cursor:pointer;
+  color: #fff
+
+}
+button{
+  outline: none;
+  padding: 0;
+}
+
+.login-form{
+  margin: 150px auto 0px auto;
+}
+.navbar-logo{
+  width: 32px;
+  height: 32px;
+}
+.add-player-btn{
+  height: 40px;
+
+}
+
+
+@media (min-width: 720px) {
+  .login-form{
+    width: 540px;
+  }
+  
+}
