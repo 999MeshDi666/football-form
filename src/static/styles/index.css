@@ -82,7 +82,21 @@ button{
 .add-player-btn{
   height: 40px;
 }
+.switch-btn-wrapper{
+  margin: 80px auto 0 auto;
+  padding-bottom: 10px;
+  width: 280px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px #000 solid;
+}
+.switch-btn{
+  background-color: transparent;
+  color: #000;
+  width: 30px;
+  /* border-radius: 10px; */
 
+}
 
 
 @media (min-width: 720px) {
@@ -102,6 +116,10 @@ button{
     width: 350px; 
     margin: 0 auto;
   }
- 
+  .switch-btn-wrapper{
+   
+    width: 340px;
+
+  }
   
 }

@@ -5,35 +5,47 @@ import {Container, Form, Button} from 'react-bootstrap';
 
 const PlayerAttemptions = () =>{
    
-    const [counter, setCounter] = useState(1)
+    const [attemptsID, setAttemptsID] = useState(1)
+    const [switchBtnID, setSwitchBtnID] = useState(1)
+    const [switchBtn, setSwitchBtn] = useState([])
     const [validated, setValidated] = useState(false);
     const [players, setPlayers] = useState([]);
-    const attemptForms = [
-        {   
-            attempt: `attempt${counter}`,
-        }
-       
-    ]
-    const [attemptsToAdd, setAttemptsToAdd ] = useState(attemptForms);
+    
+    const attemptInputs = [{attempt: `attempt${attemptsID}`}]
+    
+
+    const [attemptsToAdd, setAttemptsToAdd ] = useState(attemptInputs);
     const handelAddAttempt = (e) =>{
         e.preventDefault();
-        setCounter(counter + 1)
-        setAttemptsToAdd((prevItems) => [...prevItems, { attempt: `attempt${counter + 1}`}]); 
-       
+        setAttemptsID(attemptsID + 1)
+        setAttemptsToAdd((prevItems) => [...prevItems, { attempt: `attempt${attemptsID + 1}`}]); 
     }   
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
         }
 
         setValidated(true);
     };
+
+    useEffect(() => {
+
+        const createBtm = switchBtnID < 5 && setInterval(() => setSwitchBtnID(switchBtnID + 1), 100);
+        setSwitchBtn((prevItems) => [...prevItems, { btnID: switchBtnID }]); 
+
+        return () => clearInterval(createBtm);
+    }, [switchBtnID]);
     return(
         
         <Container>
+            <div className='switch-btn-wrapper'>
+                {switchBtn.map((id)=>(
+                    <button key={id.btnID} className="switch-btn">{id.btnID}</button>
+                ))}
+            </div>
             <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-attempts-form mt-5 attempts-form">
                 {attemptsToAdd.map((attempts)=>(
                     <Form.Group className="mb-3" controlId="attempts" key = {attempts.attempt} >
