@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios"
 import Container from "react-bootstrap/esm/Container"
 import {Table, Form, Button} from 'react-bootstrap';
+// import testData from '../../static/test-data/test1.json'
 
 
 const playerList = [
@@ -38,23 +39,43 @@ const BACKEND_URL = "http://10.0.80.107:8000/get_player/string"
 const PlayerRegister = () =>{
     const [validated, setValidated] = useState(false);
     const [players, setPlayers] = useState([]);
+    const [playerId, setPlayerID] = useState(0)
 
     
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+            event.preventDefault();
+            event.stopPropagation();
         }
 
         setValidated(true);
     };
 
+    const handleChange = (e)=>{
+        setPlayerID(e.target.value)
+    }
+    const handleAddPlayer = (e)=>{
+        e.preventDefault()
+        setPlayers((prevItems) => [...prevItems, { uid: playerId, startTime: "17:40", attempts: 6 }])
+
+        setPlayerID("")
+    }
+
+    const handleRemoverPlayer = (uid) =>{
+        // axios.dalete('test1.json').then((response)=>{
+
+        // })
+        setPlayers(players.filter((player)=>{
+            return uid !== player.uid
+        }))
+
+    }
+    // console.log(players)
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}`).then((response)=>{
+        axios.get(`test1.json`).then((response)=>{
             setPlayers(response.data)
         })
-        console.log(`player data:`, players)
     },[])
 
     return(
@@ -64,7 +85,6 @@ const PlayerRegister = () =>{
                 <Table striped bordered hover className="text-center mx-auto player-table">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Player ID</th>
                             <th>Start time</th>
                             <th>Attempts</th>
@@ -72,9 +92,8 @@ const PlayerRegister = () =>{
                         </tr>
                     </thead>
                     <tbody>
-                        {playerList.map((data)=>(
-                            <tr key={data.listIndex}>
-                                <td>{data.listIndex}</td>
+                        {players && players.length>0 && players.map((data)=>(
+                            <tr key={data.uid}>
                                 <td>{data.uid}</td>
                                 <td>{data.startTime}</td>
                                 <td>{data.attempts}</td>
@@ -83,7 +102,7 @@ const PlayerRegister = () =>{
                                         variant="outline-danger" 
                                         type="submit" 
                                         className='px-md-4 ms-2 remove-player-btn'
-                                        
+                                        onClick={ () => handleRemoverPlayer(data.uid)}
                                     >-</Button>
                                 </td>
                             </tr>
@@ -97,11 +116,14 @@ const PlayerRegister = () =>{
             
             <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-player-form mt-4 d-flex justify-content-center">
                 <Form.Group className="mb-3" controlId="player">
-                    <Form.Control type="text" placeholder="Enter player id" required/>
+                    <Form.Control type="number" placeholder="Enter player id" onChange={handleChange} required/>
                 </Form.Group>
-                <Button variant="outline-primary" type="submit" className='px-md-4 ms-2 add-player-btn'>
-                    Add
-                </Button>
+                <Button 
+                    variant="outline-primary" 
+                    type="submit" 
+                    className='px-md-4 ms-2 add-player-btn'
+                    onClick={handleAddPlayer}
+                >Add</Button>
             </Form>
 
         </Container>

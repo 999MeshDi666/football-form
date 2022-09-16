@@ -32,14 +32,13 @@ const PlayerAttemptions = () =>{
     };
 
     useEffect(() => {
-
         const createBtm = switchBtnID < 5 && setInterval(() => setSwitchBtnID(switchBtnID + 1), 100);
         setSwitchBtn((prevItems) => [...prevItems, { btnID: switchBtnID }]); 
 
         return () => clearInterval(createBtm);
     }, [switchBtnID]);
+
     return(
-        
         <Container>
             <div className='switch-btn-wrapper'>
                 {switchBtn.map((id)=>(
