@@ -22,7 +22,7 @@ const LoginForm = () =>{
             <Form noValidate validated={validated} onSubmit={handleSubmit} className="login-form">
                 <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="username" placeholder="Enter username"  required/>
+                    <Form.Control type="text" placeholder="Enter username"  required/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>

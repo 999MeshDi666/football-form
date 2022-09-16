@@ -31,15 +31,17 @@ const playerList = [
         attempts: '0/6',
     },
 
+
+    
 ]
 
-const BACKEND_URL = 0
+const BACKEND_URL = "http://10.0.80.107:8000/get_player/string"
 
 const PlayerRegister = () =>{
     const [validated, setValidated] = useState(false);
     const [players, setPlayers] = useState([]);
 
-
+    
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -50,42 +52,57 @@ const PlayerRegister = () =>{
         setValidated(true);
     };
 
-    // useEffect(()=>{
-    //     axios.get(`${BACKEND_URL}`).then((response)=>{
-    //         setPlayers(response.data)
-    //     })
-    // },[])
+    useEffect(()=>{
+        axios.get(`${BACKEND_URL}`).then((response)=>{
+            setPlayers(response.data)
+        })
+        console.log(`player data:`, players)
+    },[])
+
     return(
         <Container>
             <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #0085 | Players: 4 </h1>
-            <Table striped bordered hover className="text-center mx-auto fs-5">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Player ID</th>
-                        <th>Start time</th>
-                        <th>attempts</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {playerList.map((data)=>(
-                        <tr key={data.listIndex}>
-                            <td>{data.listIndex}</td>
-                            <td>{data.uid}</td>
-                            <td>{data.startTime}</td>
-                            <td>{data.attempts}</td>
+            <div className="table-wrapper">
+                <Table striped bordered hover className="text-center mx-auto player-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Player ID</th>
+                            <th>Start time</th>
+                            <th>Attempts</th>
+                            <th>Remove</th>
                         </tr>
-                    ))}
+                    </thead>
+                    <tbody>
+                        {playerList.map((data)=>(
+                            <tr key={data.listIndex}>
+                                <td>{data.listIndex}</td>
+                                <td>{data.uid}</td>
+                                <td>{data.startTime}</td>
+                                <td>{data.attempts}</td>
+                                <td>
+                                    <Button 
+                                        variant="outline-danger" 
+                                        type="submit" 
+                                        className='px-md-4 ms-2 remove-player-btn'
+                                        
+                                    >-</Button>
+                                </td>
+                            </tr>
+                        ))}
 
-                    
-                </tbody>
-            </Table>
-            <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-player-form mt-5 d-flex justify-content-center">
+                        
+                    </tbody>
+                </Table>
+
+            </div>
+            
+            <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-player-form mt-4 d-flex justify-content-center">
                 <Form.Group className="mb-3" controlId="player">
-                    <Form.Control type="player" placeholder="Enter username" required/>
+                    <Form.Control type="text" placeholder="Enter player id" required/>
                 </Form.Group>
-                <Button variant="outline-primary" type="submit" className='add-player-btn px-4 ms-2'>
-                    Add player
+                <Button variant="outline-primary" type="submit" className='px-md-4 ms-2 add-player-btn'>
+                    Add
                 </Button>
             </Form>
 

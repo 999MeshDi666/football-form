@@ -5,6 +5,7 @@ import Navigation from "./content/Navigation";
 const App = () => {
   return (
     <div className="App">
+      <Header/>
       <Navigation/>
      
       
