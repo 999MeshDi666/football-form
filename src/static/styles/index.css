@@ -50,13 +50,21 @@ button{
   outline: none;
   padding: 0;
 }
-
+.navbar-purple{
+  background: linear-gradient(301.1deg, #550065 4.82%, #873EB4 101.65%);
+}
+/* .btn-purple{
+  background: linear-gradient(301.1deg, #550065 4.82%, #873EB4 101.65%);
+  border: 0 !important;
+} */
 .login-form{
   margin: 150px auto 0px auto;
 }
 .navbar-logo{
-  width: 32px;
-  height: 32px;
+  width: 80px;
+}
+.navbar-logo-title{
+  font-size: 20px;
 }
 .match-title{
   font-size: 24px;
@@ -70,7 +78,6 @@ button{
 }
 .remove-player-btn{
   font-weight: bold !important;
-
 }
 .add-player-btn{
   height: 40px;
@@ -79,6 +86,9 @@ button{
 
 
 @media (min-width: 720px) {
+  .navbar-logo{
+    width: 120px;
+  }
   .login-form{
     width: 540px;
   }
@@ -90,6 +100,7 @@ button{
   }
   .attempts-form{
     width: 350px; 
+    margin: 0 auto;
   }
  
   

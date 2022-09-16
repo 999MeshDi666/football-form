@@ -31,8 +31,6 @@ const playerList = [
         attempts: '0/6',
     },
 
-
-    
 ]
 
 const BACKEND_URL = "http://10.0.80.107:8000/get_player/string"
