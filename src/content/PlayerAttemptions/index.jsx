@@ -27,7 +27,7 @@ const PlayerAttemptions = () =>{
             event.preventDefault();
             event.stopPropagation();
         }
-
+        
         setValidated(true);
     };
 

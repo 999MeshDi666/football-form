@@ -97,6 +97,9 @@ button{
   /* border-radius: 10px; */
 
 }
+.switch-btn:focus{
+  background-color: rgba(255, 255, 255, 0.279) !important;
+}
 
 
 @media (min-width: 720px) {

@@ -3,38 +3,39 @@ import { useEffect } from "react";
 import axios from "axios"
 import Container from "react-bootstrap/esm/Container"
 import {Table, Form, Button} from 'react-bootstrap';
+import transformData from "../../transformator";
 // import testData from '../../static/test-data/test1.json'
 
 
-const playerList = [
-    {
-        listIndex: 1,
-        uid: 85358,
-        startTime: '17:40',
-        attempts: '0/6',
-    },
-    {
-        listIndex: 2,
-        uid: 75894,
-        startTime: '17:40',
-        attempts: '0/6',
-    },
-    {
-        listIndex: 3,
-        uid: 85236,
-        startTime: '17:40',
-        attempts: '0/6',
-    },
-    {
-        listIndex: 4,
-        uid: 25785,
-        startTime: '17:40',
-        attempts: '0/6',
-    },
+// const playerList = [
+//     {
+//         listIndex: 1,
+//         uid: 85358,
+//         startTime: '17:40',
+//         attempts: '0/6',
+//     },
+//     {
+//         listIndex: 2,
+//         uid: 75894,
+//         startTime: '17:40',
+//         attempts: '0/6',
+//     },
+//     {
+//         listIndex: 3,
+//         uid: 85236,
+//         startTime: '17:40',
+//         attempts: '0/6',
+//     },
+//     {
+//         listIndex: 4,
+//         uid: 25785,
+//         startTime: '17:40',
+//         attempts: '0/6',
+//     },
 
-]
+// ]
 
-const BACKEND_URL = "http://10.0.80.107:8000/get_player/string"
+const BACKEND_URL = "http://10.0.80.107:8000/match/"
 
 const PlayerRegister = () =>{
     const [validated, setValidated] = useState(false);
@@ -73,14 +74,22 @@ const PlayerRegister = () =>{
     }
     // console.log(players)
     useEffect(()=>{
-        axios.get(`test1.json`).then((response)=>{
-            setPlayers(response.data)
-        })
-    },[])
+        axios.get(`${BACKEND_URL}`).then((response)=>{
+            // console.log(response.data)
+            setPlayers(transformData(response.data))
 
+            // // console.log(Object.values(response.data.players))
+            // Object.values(response.data).map((data)=>{
+            //     console.log(data)
+            // })
+             
+        })
+        
+    },[])
+    
     return(
         <Container>
-            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #0085 | Players: 4 </h1>
+            {/* <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{players['match_id']} | Players: {players['players'] ? players['players'].length : ' '}  </h1> */}
             <div className="table-wrapper">
                 <Table striped bordered hover className="text-center mx-auto player-table">
                     <thead>
