@@ -8,8 +8,8 @@ import {Table, Form, Button, Container} from 'react-bootstrap';
 import transformData from "../../transformator";
 
 
-const BACKEND_URL = "http://127.0.0.1:8000"
 
+const BACKEND_URL = "http://127.0.0.1:8000"
 const PlayerRegister = () =>{
     var notyf = new Notyf({
         duration: 1000,

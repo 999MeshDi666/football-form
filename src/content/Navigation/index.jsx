@@ -3,6 +3,7 @@ import LoginForm from "../Login-form/index";
 import PlayerRegister from "../PlayerRegister";
 import PlayerAttemptions from "../PlayerAttemptions";
 
+
 const Navigation = () =>{
     return(
 
