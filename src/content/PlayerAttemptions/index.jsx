@@ -17,11 +17,12 @@ const PlayerAttemptions = () =>{
     const [switchBtnCount, setSwitchBtnCount] = useState()
     const [validated, setValidated] = useState(false);
     const [score, setScore] = useState({});
-    const [isDone, setIsDone] = useState(true)
+    const [isDone, setIsDone] = useState(false)
     const [postScore, setPostScore] = useState({})
     
     const handleNextGame = (id) =>{
         navigateNext(`/player-attemptions/${id}`)
+        setIsDone(false)
     }
 
     const handleRedirectToReg = ()=>{
@@ -35,13 +36,13 @@ const PlayerAttemptions = () =>{
             [name]: value,
         });
     }
-    const handleSubmit = (event) => {
+    const handleSubmit = (event) => {   
         event.preventDefault()
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }else{
-            setIsDone( prevState => !prevState)
+            setIsDone(true)
         }
         setValidated(true);
     };
@@ -77,6 +78,15 @@ const PlayerAttemptions = () =>{
             </div>
             {
                 isDone ?
+                <div className='d-flex flex-column'>
+                    <img src={doneImg} alt="done" className='done-img'/>
+                    <Button 
+                        variant="success" 
+                        className='done-btn'
+                        onClick = {handleRedirectToReg}
+                    >Done</Button>
+                </div>  
+                :
                 <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-attempts-form mt-5 attempts-form">
                     {(() => {
                         const attemptsToAdd = [];
@@ -102,15 +112,7 @@ const PlayerAttemptions = () =>{
                         onClick = {handlePostScores}
                     >Done</Button>
                 </Form>
-                :
-                <div className='d-flex flex-column'>
-                    <img src={doneImg} alt="done" className='done-img'/>
-                    <Button 
-                        variant="success" 
-                        className='done-btn'
-                        onClick = {handleRedirectToReg}
-                    >Done</Button>
-                </div>   
+                 
             }
             
         </Container>
