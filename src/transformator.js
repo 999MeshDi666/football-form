@@ -7,6 +7,9 @@ function transformData(data){
         })
     })
 }
+// function transformDataByPost(data){
+//     return data.
+// }
 
 const someData = {
     players: ['1','2','3','5'],

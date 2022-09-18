@@ -1,20 +1,29 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import Container from "react-bootstrap/esm/Container"
-import {Table, Form, Button} from 'react-bootstrap';
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css'; // for React, Vue and Svelte
+import {Table, Form, Button, Container} from 'react-bootstrap';
 import transformData from "../../transformator";
 
 
 const BACKEND_URL = "http://127.0.0.1:8000"
 
 const PlayerRegister = () =>{
+    var notyf = new Notyf({
+        duration: 1000,
+        position: {
+          x: 'right',
+          y: 'top',
+        }
+    });
     const [validated, setValidated] = useState(false);
     const [players, setPlayers] = useState([]);
     const [playerID, setPlayerID] = useState(0)
     const [matchID, setMatchID] = useState()
     const [playerLen, setPlayerLen] = useState()
-    
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -31,12 +40,17 @@ const PlayerRegister = () =>{
 
     const handleAddPlayer = (e)=>{
         e.preventDefault()
-        axios.post(`${BACKEND_URL}/add_player/?id=${playerID}`)
+        axios.post(`${BACKEND_URL}/add_player/?id=${playerID}`) 
         .then((response)=>{
-            setPlayers((prevItems) => [...prevItems, response.data])
+            setPlayers(transformData(response.data)) 
+            setTimeout(()=>{
+                navigate("/player-attemptions/1");
+            },2000)
+            // debugger
         })
         .catch(function(error) {
             console.log(error);
+            notyf.error('Player not found');
         });
         
         setPlayerID("")
@@ -45,16 +59,16 @@ const PlayerRegister = () =>{
     const handleRemoverPlayer = (uid) =>{
         axios.post(`${BACKEND_URL}/delete_player/?id=${uid}`)
         .then((response)=>{
-            const deletedPlayer = response.data;
-            setPlayers(players.filter((player)=>{
-                return deletedPlayer.uid !== player.uid
-            }))
+            setPlayers(transformData(response.data)) 
         })
         .catch(function(error) {
             console.log(error);
+
         });
     }
- 
+
+    
+  
     useEffect(()=>{
         
         axios.get(`${BACKEND_URL}/match/`)

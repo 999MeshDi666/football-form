@@ -10,7 +10,9 @@ const Navigation = () =>{
             <Routes>
                 <Route path="/" element={<LoginForm/>}/>
                 <Route path="/player-registration" element={<PlayerRegister/>}/>
-                <Route path="/player-attemptions" element={<PlayerAttemptions/>}/>
+                <Route path="/player-attemptions">
+                    <Route path=":gameID" element={<PlayerAttemptions/>}/>
+                </Route>
             </Routes>
         </BrowserRouter>
     )
