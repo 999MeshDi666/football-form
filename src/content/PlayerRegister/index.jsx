@@ -36,6 +36,7 @@ const PlayerRegister = () =>{
 
     const handleChange = (e)=>{
         setPlayerID(e.target.value)
+
     }
 
     const handleAddPlayer = (e)=>{
@@ -43,9 +44,11 @@ const PlayerRegister = () =>{
         axios.post(`${BACKEND_URL}/add_player/?id=${playerID}`) 
         .then((response)=>{
             setPlayers(transformData(response.data)) 
+            sessionStorage.setItem("playerID", playerID);
             setTimeout(()=>{
                 navigate("/player-attemptions/1");
             },2000)
+
             // debugger
         })
         .catch(function(error) {

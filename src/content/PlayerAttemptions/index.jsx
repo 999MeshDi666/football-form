@@ -8,11 +8,10 @@ import doneImg from "../../static/images/done.png"
 const BACKEND_URL = "http://127.0.0.1:8000"
 const PlayerAttemptions = () =>{
   
-
     let { gameID } = useParams();
     const navigateNext = useNavigate();
     const navigateToReg = useNavigate()
-
+    const playerID = sessionStorage.getItem("playerID")
     const [attemptsCount, setAttemptsCount] = useState()
     const [switchBtnCount, setSwitchBtnCount] = useState()
     const [matchID, setMatchID] = useState()
@@ -20,7 +19,6 @@ const PlayerAttemptions = () =>{
     const [validated, setValidated] = useState(false);
     const [score, setScore] = useState({});
     const [isDone, setIsDone] = useState(false)
-    const [postScore, setPostScore] = useState({})
     
     const handleNextGame = (id) =>{
         navigateNext(`/player-attemptions/${id}`)
@@ -50,21 +48,21 @@ const PlayerAttemptions = () =>{
     };
     
     const handlePostScores = () =>{
-        const sumValues = obj => Object.values(obj).reduce((a, b) => a + b)
+        const sumValues = obj => Object.values(obj).reduce((a, b) =>  a + b)
         const totalScore = sumValues(score)
-        
-        axios.post(`${BACKEND_URL}/player_result_try/`, {
-            matchID: matchID,
-            gameID: parseInt(gameID),
-            score_sum: totalScore,
-        })
-        .then((response)=>{
+        console.log({match_id: matchID, player_id: playerID, game_id: parseInt(gameID), result: totalScore})
+        // axios.post(`${BACKEND_URL}/player_result_try/`, {
+        //     matchID: matchID,
+        //     gameID: parseInt(gameID),
+        //     score_sum: totalScore,
+        // })
+        // .then((response)=>{
 
 
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        // })
+        // .catch(function(error) {
+        //     console.log(error);
+        // });
     }
    
     useEffect(()=>{
@@ -82,8 +80,8 @@ const PlayerAttemptions = () =>{
 
     return(
         <Container>
-            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
-            <p></p>
+            <h1 className="match-title text-center mt-5 mb-2 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
+            <p className="match-title text-center mb-4 fw-bold">Player: {playerID}</p>
             <div className='switch-btn-wrapper'>
                 {(() => {
                     const switchBtn = [];
@@ -103,7 +101,7 @@ const PlayerAttemptions = () =>{
                         variant="success" 
                         className='done-btn'
                         onClick = {handleRedirectToReg}
-                    >Done</Button>
+                    >Home</Button>
                 </div>  
                 :
                 <Form noValidate validated={validated} onSubmit={handleSubmit} className="add-attempts-form mt-5 attempts-form">
@@ -125,9 +123,9 @@ const PlayerAttemptions = () =>{
                         return attemptsToAdd;
                     })()}
                     <Button 
+                        type='submit'
                         variant="outline-primary" 
-                        type="submit" 
-                        className='done-btn px-4 ms-4 mb-5'
+                        className='done-btn mb-4'
                         onClick = {handlePostScores}
                     >Done</Button>
                 </Form>

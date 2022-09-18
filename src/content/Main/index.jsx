@@ -4,7 +4,7 @@ import PlayerRegister from "../PlayerRegister";
 import PlayerAttemptions from "../PlayerAttemptions";
 
 
-const Navigation = () =>{
+const Main = () =>{
     return(
 
         <BrowserRouter>
@@ -18,4 +18,4 @@ const Navigation = () =>{
         </BrowserRouter>
     )
 }
-export default Navigation
+export default Main
