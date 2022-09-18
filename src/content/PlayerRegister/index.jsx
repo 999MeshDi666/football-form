@@ -87,7 +87,7 @@ const PlayerRegister = () =>{
     
     return(
         <Container>
-            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}  </h1>
+            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
             <div className="table-wrapper">
                 <Table striped bordered hover className="text-center mx-auto player-table">
                     <thead>

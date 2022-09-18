@@ -15,6 +15,8 @@ const PlayerAttemptions = () =>{
 
     const [attemptsCount, setAttemptsCount] = useState()
     const [switchBtnCount, setSwitchBtnCount] = useState()
+    const [matchID, setMatchID] = useState()
+    const [playerLen, setPlayerLen] = useState()
     const [validated, setValidated] = useState(false);
     const [score, setScore] = useState({});
     const [isDone, setIsDone] = useState(false)
@@ -33,7 +35,7 @@ const PlayerAttemptions = () =>{
         const { name, value } = e.target;
         setScore({
             ...score,
-            [name]: value,
+            [name]: parseInt(value),
         });
     }
     const handleSubmit = (event) => {   
@@ -48,8 +50,21 @@ const PlayerAttemptions = () =>{
     };
     
     const handlePostScores = () =>{
-        console.log({ gameID: gameID, scores: score })
-        // axios.post(`${BACKEND_URL}`) 
+        const sumValues = obj => Object.values(obj).reduce((a, b) => a + b)
+        const totalScore = sumValues(score)
+        
+        axios.post(`${BACKEND_URL}/player_result_try/`, {
+            matchID: matchID,
+            gameID: parseInt(gameID),
+            score_sum: totalScore,
+        })
+        .then((response)=>{
+
+
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     }
    
     useEffect(()=>{
@@ -57,6 +72,8 @@ const PlayerAttemptions = () =>{
         .then((response)=>{
             setAttemptsCount(response.data['match_settings'].try_count)
             setSwitchBtnCount(response.data['match_settings'].games_count)
+            setMatchID(response.data['match_id'])
+            setPlayerLen(response.data['players'].length)
         })
         .catch(function(error) {
             console.log(error);
@@ -65,6 +82,8 @@ const PlayerAttemptions = () =>{
 
     return(
         <Container>
+            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
+            <p></p>
             <div className='switch-btn-wrapper'>
                 {(() => {
                     const switchBtn = [];
