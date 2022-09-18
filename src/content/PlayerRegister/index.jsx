@@ -4,44 +4,16 @@ import axios from "axios"
 import Container from "react-bootstrap/esm/Container"
 import {Table, Form, Button} from 'react-bootstrap';
 import transformData from "../../transformator";
-// import testData from '../../static/test-data/test1.json'
 
 
-// const playerList = [
-//     {
-//         listIndex: 1,
-//         uid: 85358,
-//         startTime: '17:40',
-//         attempts: '0/6',
-//     },
-//     {
-//         listIndex: 2,
-//         uid: 75894,
-//         startTime: '17:40',
-//         attempts: '0/6',
-//     },
-//     {
-//         listIndex: 3,
-//         uid: 85236,
-//         startTime: '17:40',
-//         attempts: '0/6',
-//     },
-//     {
-//         listIndex: 4,
-//         uid: 25785,
-//         startTime: '17:40',
-//         attempts: '0/6',
-//     },
-
-// ]
-
-const BACKEND_URL = "http://10.0.80.107:8000/match/"
+const BACKEND_URL = "http://127.0.0.1:8000"
 
 const PlayerRegister = () =>{
     const [validated, setValidated] = useState(false);
     const [players, setPlayers] = useState([]);
-    const [playerId, setPlayerID] = useState(0)
-
+    const [playerID, setPlayerID] = useState(0)
+    const [matchID, setMatchID] = useState()
+    const [playerLen, setPlayerLen] = useState()
     
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -56,40 +28,52 @@ const PlayerRegister = () =>{
     const handleChange = (e)=>{
         setPlayerID(e.target.value)
     }
+
     const handleAddPlayer = (e)=>{
         e.preventDefault()
-        setPlayers((prevItems) => [...prevItems, { uid: playerId, startTime: "17:40", attempts: 6 }])
-
+        axios.post(`${BACKEND_URL}/add_player/?id=${playerID}`)
+        .then((response)=>{
+            setPlayers((prevItems) => [...prevItems, response.data])
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+        
         setPlayerID("")
     }
-
+    
     const handleRemoverPlayer = (uid) =>{
-        // axios.dalete('test1.json').then((response)=>{
-
-        // })
-        setPlayers(players.filter((player)=>{
-            return uid !== player.uid
-        }))
-
-    }
-    // console.log(players)
-    useEffect(()=>{
-        axios.get(`${BACKEND_URL}`).then((response)=>{
-            // console.log(response.data)
-            setPlayers(transformData(response.data))
-
-            // // console.log(Object.values(response.data.players))
-            // Object.values(response.data).map((data)=>{
-            //     console.log(data)
-            // })
-             
+        axios.post(`${BACKEND_URL}/delete_player/?id=${uid}`)
+        .then((response)=>{
+            const deletedPlayer = response.data;
+            setPlayers(players.filter((player)=>{
+                return deletedPlayer.uid !== player.uid
+            }))
         })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+ 
+    useEffect(()=>{
+        
+        axios.get(`${BACKEND_URL}/match/`)
+        .then((response)=>{
+            console.log(response.data)
+            setPlayers(transformData(response.data))
+            setMatchID(response.data['match_id'])
+            setPlayerLen(response.data['players'].length)
+   
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
         
     },[])
     
     return(
         <Container>
-            {/* <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{players['match_id']} | Players: {players['players'] ? players['players'].length : ' '}  </h1> */}
+            <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}  </h1>
             <div className="table-wrapper">
                 <Table striped bordered hover className="text-center mx-auto player-table">
                     <thead>

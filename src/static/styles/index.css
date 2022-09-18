@@ -87,13 +87,15 @@ button{
   padding-bottom: 10px;
   width: 280px;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
   border-bottom: 1px #000 solid;
 }
 .switch-btn{
   background-color: transparent;
   color: #000;
   width: 30px;
+  margin: 4px 10px;
   /* border-radius: 10px; */
 
 }
