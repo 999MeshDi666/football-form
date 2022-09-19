@@ -5,19 +5,23 @@ import axios from "axios"
 
 
 const BACKEND_URL = "http://127.0.0.1:8000"
-const ScoreTable = ()=>{
+const ScoreTables = ()=>{
     const [players, setPlayers] = useState([])
 
 
     useEffect(()=>{
-        
-        axios.get(`test1.json`)
+        axios.get('data.json')
         .then((response)=>{
             console.log(response.data)
+            // setPlayers(transformData(response.data))
+            // setMatchID(response.data['match_id'])
+            // setPlayerLen(response.data['players'].length)
+   
         })
         .catch(function(error) {
             console.log(error);
         });
+        
         
     },[])
     // console.log(players)
@@ -34,7 +38,7 @@ const ScoreTable = ()=>{
                         </tr>
                     </thead>
                     <tbody>
-                        {players && players.length>0 && players.map((data)=>(
+                        {/* {players && players.length>0 && players.map((data)=>(
                             <tr key={data.uid}>
                                 <td>{data.uid}</td>
                                 <td>{data.startTime}</td>
@@ -48,7 +52,7 @@ const ScoreTable = ()=>{
                                     >-</Button>
                                 </td>
                             </tr>
-                        ))}
+                        ))} */}
 
                         
                     </tbody>
@@ -62,4 +66,4 @@ const ScoreTable = ()=>{
         
     )
 }
-export default ScoreTable
+export default ScoreTables
