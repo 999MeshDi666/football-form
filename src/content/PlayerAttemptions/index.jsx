@@ -30,14 +30,12 @@ const PlayerAttemptions = () =>{
     const [attemptsCount, setAttemptsCount] = useState()
     const [score, setScore] = useState({})
     const [isDone, setIsDone] = useState(false)
-    // const [switch]
     
-    const handleNextGame = (id) =>{
+    const handleNextGame = (id) =>{     
         navigateNext(`/player-attemptions/${id}`)
         setIsDone(switchBtn[id-1].isDisabled)
-        
-        
     }
+  
     const handleRedirectToReg = ()=>{
         navigateToReg('/player-registration')
     }
@@ -49,7 +47,24 @@ const PlayerAttemptions = () =>{
             [name]: parseInt(value),
         });
     }
+    const postScoreData = () =>{
+        const sumValues = obj => Object.values(obj).reduce((a, b) =>  a + b)
+        const totalScore = sumValues(score)
+        console.log({match_id: matchID, player_id: playerID, game_id: parseInt(gameID), result: totalScore})
 
+        axios.post(`${BACKEND_URL}/player_result_try/`, {
+            match_id: matchID, 
+            player_id: playerID, 
+            game_id: parseInt(gameID), 
+            result: totalScore
+        })
+        .then(function(response){
+            console.log(response)
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+    }
     const scoreValidation = (event) =>{
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -64,21 +79,19 @@ const PlayerAttemptions = () =>{
                     }else return btn
                 })
             )
+            postScoreData()
+            
         }
         setValidated(true);
+        
 
     }
-    
+
     const handleSubmit = (event) => {   
         event.preventDefault()
         scoreValidation(event)
     };
     
-    const handlePostScores = () =>{
-        const sumValues = obj => Object.values(obj).reduce((a, b) =>  a + b)
-        const totalScore = sumValues(score)
-        console.log({match_id: matchID, player_id: playerID, game_id: parseInt(gameID), result: totalScore})
-    }
   
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/match/`)
@@ -110,9 +123,8 @@ const PlayerAttemptions = () =>{
                         className="switch-btn"
                         disabled = {data.isDisabled} 
                         defaultChecked = {data.btnID === 1}
-                        onChange={ () => handleNextGame(data.btnID)}
                         />
-                        <label htmlFor={data.btnID} className="switch-btn-label" >{data.btnID}</label>
+                        <label htmlFor={data.btnID} className="switch-btn-label" onClick={ () => handleNextGame(data.btnID)} >{data.btnID}</label>
                     </fieldset>
                 ))}
             </div>
@@ -149,7 +161,7 @@ const PlayerAttemptions = () =>{
                         type='submit'
                         variant="outline-primary" 
                         className='done-btn mb-4'
-                        onClick = {handlePostScores}
+                        // onClick = {handlePostScores}
                     >Done</Button>
                 </Form>
                  
