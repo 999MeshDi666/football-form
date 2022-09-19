@@ -92,16 +92,24 @@ button{
   border-bottom: 1px #000 solid;
 }
 .switch-btn{
-  background-color: transparent;
-  color: #000;
-  width: 30px;
-  margin: 4px 8px;
+  display: none;
   /* border-radius: 10px; */
+}
+.switch-btn-label{
+  cursor: pointer;
+  border-radius: 3px;
+  text-align: center;
+  border: 1px rgb(97, 97, 97) solid;
+  margin: 4px 8px;
+  width: 30px;
+}
+.switch-btn:disabled + .switch-btn-label{
+  background-color: #6bcf64;
+}
+.switch-btn:checked + .switch-btn-label{
+  background-color: rgba(47, 47, 47, 0.414);
+}
 
-}
-.switch-btn:focus{
-  background-color: rgba(255, 255, 255, 0.279) !important;
-}
 .done-img{
   width: 180px;
   margin: 50px auto;

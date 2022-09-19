@@ -1,4 +1,4 @@
-function transformData(data){
+export default function transformData(data){
     return data.players.map(e=> {
         return({
             uid: e || 0,
@@ -7,9 +7,7 @@ function transformData(data){
         })
     })
 }
-// function transformDataByPost(data){
-//     return data.
-// }
+
 
 const someData = {
     players: ['1','2','3','5'],
@@ -21,4 +19,4 @@ const someData = {
 
 // console.log(transformData(someData))
 
-export default transformData;
+
