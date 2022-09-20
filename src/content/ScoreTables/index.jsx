@@ -6,14 +6,14 @@ import { transformDataScores } from "../../transformator";
 
 const BACKEND_URL = "http://127.0.0.1:8000"
 const ScoreTables = ()=>{
-    
+
     const [players, setPlayers] = useState([])
 
     // useEffect(()=>{
         
     //     axios.get(`data.json`)
     //     .then((response)=>{
-    //         console.log(transformDataScores(response.data))
+    //         setPlayers(transformDataScores(response.data))
         
     //     })
     //     .catch(function(error) {

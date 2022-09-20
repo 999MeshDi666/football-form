@@ -107,7 +107,7 @@ button{
   margin: 4px 8px;
   width: 30px;
 }
-.switch-btn:disabled + .switch-btn-label{
+.label-done{
   background-color: #6bcf64;
 }
 .switch-btn:checked + .switch-btn-label{

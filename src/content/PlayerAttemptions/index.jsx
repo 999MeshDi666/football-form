@@ -33,7 +33,7 @@ const PlayerAttemptions = () =>{
     
     const handleNextGame = (id) =>{     
         navigateNext(`/player-attemptions/${id}`)
-        setIsDone(switchBtn[id-1].isDisabled)
+        setIsDone(switchBtn[id-1].isDone)
     }
   
     const handleRedirectToReg = ()=>{
@@ -75,7 +75,7 @@ const PlayerAttemptions = () =>{
             setSwitchBtn((prevState)=>
                 prevState.map((btn)=>{
                     if(btn.btnID === parseInt(gameID)){
-                        return{...btn, isDisabled: !btn.isDisabled}
+                        return{...btn, isDone: !btn.isDone}
                     }else return btn
                 })
             )
@@ -83,8 +83,7 @@ const PlayerAttemptions = () =>{
             
         }
         setValidated(true);
-        
-
+    
     }
 
     const handleSubmit = (event) => {   
@@ -97,7 +96,7 @@ const PlayerAttemptions = () =>{
         axios.get(`${BACKEND_URL}/match/`)
         .then((response)=>{
             for(let i = 1; i<=response.data['match_settings'].games_count ; i++){
-                setSwitchBtn((prevState)=>[...prevState, {btnID: i, isDisabled: false}])
+                setSwitchBtn((prevState)=>[...prevState, {btnID: i, isDone: false}])
             }
             setAttemptsCount(response.data['match_settings'].try_count)
             setMatchID(response.data['match_id'])
@@ -108,7 +107,7 @@ const PlayerAttemptions = () =>{
             console.log(error);
         });
     }, [])
- 
+    console.log(switchBtn)
     return(
         <Container>
             <h1 className="match-title text-center mt-5 mb-2 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
@@ -121,10 +120,13 @@ const PlayerAttemptions = () =>{
                         id = {data.btnID} 
                         name="switch games"
                         className="switch-btn"
-                        disabled = {data.isDisabled} 
-                        defaultChecked = {data.btnID === 1}
+                        defaultChecked = {data.btnID === parseInt(gameID)}
                         />
-                        <label htmlFor={data.btnID} className="switch-btn-label" onClick={ () => handleNextGame(data.btnID)} >{data.btnID}</label>
+                        <label 
+                        htmlFor={data.btnID} 
+                        className= {`switch-btn-label ${ data.isDone  ? 'label-done':''}`} 
+                        onClick={ () => handleNextGame(data.btnID)}>
+                        {data.btnID}</label>
                     </fieldset>
                 ))}
             </div>
