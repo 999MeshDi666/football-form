@@ -2,29 +2,26 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import {Table, Form, Button, Container} from 'react-bootstrap';
 import axios from "axios"
-
+import { transformDataScores } from "../../transformator";
 
 const BACKEND_URL = "http://127.0.0.1:8000"
 const ScoreTables = ()=>{
+    
     const [players, setPlayers] = useState([])
 
-
-    useEffect(()=>{
-        axios.get('data.json')
-        .then((response)=>{
-            console.log(response.data)
-            // setPlayers(transformData(response.data))
-            // setMatchID(response.data['match_id'])
-            // setPlayerLen(response.data['players'].length)
-   
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+    // useEffect(()=>{
         
+    //     axios.get(`data.json`)
+    //     .then((response)=>{
+    //         console.log(transformDataScores(response.data))
         
-    },[])
-    // console.log(players)
+    //     })
+    //     .catch(function(error) {
+    //         console.log(error);
+    //     });
+        
+    // },[])
+        
 
     return(
         <Container>

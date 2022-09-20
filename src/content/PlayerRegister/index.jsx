@@ -5,7 +5,7 @@ import axios from "axios"
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; // for React, Vue and Svelte
 import {Table, Form, Button, Container} from 'react-bootstrap';
-import transformData from "../../transformator";
+import { transformData } from "../../transformator";
 
 
 
@@ -87,7 +87,8 @@ const PlayerRegister = () =>{
         });
         
     },[])
-    
+
+
     return(
         <Container>
             <h1 className="match-title text-center mt-5 mb-4 fw-bold">Match: #{matchID} | Players: {playerLen}</h1>
