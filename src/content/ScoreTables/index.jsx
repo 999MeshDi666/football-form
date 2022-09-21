@@ -10,14 +10,17 @@ const ScoreTables = ()=>{
     const [players, setPlayers] = useState([])
 
     useEffect(()=>{
+        setInterval(()=>{
+            axios.get(`${BACKEND_URL}/match_result/`)
+            .then((response)=>{
+                setPlayers(response.data)
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
+        },1000)
         
-        axios.get(`${BACKEND_URL}/match_result/`)
-        .then((response)=>{
-            setPlayers(response.data)
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
         
     },[])
 
