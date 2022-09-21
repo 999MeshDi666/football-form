@@ -76,7 +76,7 @@ const PlayerRegister = () =>{
         
         axios.get(`${BACKEND_URL}/match/`)
         .then((response)=>{
-            console.log(response.data)
+            // console.log(response.data)
             setPlayers(transformData(response.data))
             setMatchID(response.data['match_id'])
             setPlayerLen(response.data['players'].length)
@@ -88,8 +88,7 @@ const PlayerRegister = () =>{
         
     },[])
 
-    
-
+   
 
     return(
         <Container>
@@ -120,10 +119,9 @@ const PlayerRegister = () =>{
                                 </td>
                             </tr>
                         ))}
-
-                        
                     </tbody>
                 </Table>
+                
 
             </div>
             

@@ -9,49 +9,45 @@ const ScoreTables = ()=>{
 
     const [players, setPlayers] = useState([])
 
-    // useEffect(()=>{
+    useEffect(()=>{
         
-    //     axios.get(`data.json`)
-    //     .then((response)=>{
-    //         setPlayers(transformDataScores(response.data))
+        axios.get(`${BACKEND_URL}/match_result/`)
+        .then((response)=>{
+            setPlayers(response.data)
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
         
-    //     })
-    //     .catch(function(error) {
-    //         console.log(error);
-    //     });
-        
-    // },[])
+    },[])
+
         
 
     return(
         <Container>
             <div className='table-wrapper'>
-                <Table striped bordered hover className="text-center mx-auto player-table mt-5">
+                <Table striped bordered hover className="text-center mx-auto mt-5 player-table ">
                     <thead>
                         <tr>
                             <th>Player ID</th>
-                            <th>Attempts</th>
-                            <th>Scores</th>
+                            <th>Scoresc</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {players && players.length>0 && players.map((data)=>(
-                            <tr key={data.uid}>
-                                <td>{data.uid}</td>
-                                <td>{data.startTime}</td>
-                                <td>{data.attempts}</td>
-                                <td>
-                                    <Button 
-                                        variant="outline-danger" 
-                                        type="submit" 
-                                        className='px-md-4 ms-2 remove-player-btn'
-                                        // onClick={ () => handleRemoverPlayer(data.uid)}
-                                    >-</Button>
-                                </td>
-                            </tr>
-                        ))} */}
-
-                        
+                        { 
+                            Object.keys(players).map(key =>(
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>
+                                        <ul>
+                                            {Object.values(players[key]).map((data, index)=>(
+                                                <li>{Object.keys(players[key])[index]}: {data}</li>
+                                            ))}
+                                        </ul>
+                                    </td>
+                                </tr>  
+                            ))
+                        }
                     </tbody>
                 </Table>
 
